@@ -1,28 +1,17 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <link href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <title>Silex - list</title>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Silex</h1>
-        </header>
-        <a href="{{ path('homepage') }}">Home</a> -> <a href="{{ path('listWithAuthors') }}">list page</a>
-        <div class="col-md-8">
-            <h2>Article</h2>
-            <h3>{{ article.title }}</h3>
-            <p>{{ article.content }}</p>
-                <p>publié le {{ article.date_publi }}</p>
-            <hr>
-            <h2>Auteur:
-                <a href="{{ path('author', {id:author.id}) }}">{{ author.username }}</a>
-            </h2>
-        </div>
-        <footer class="footer">
-        </footer>
+{% extends "layout.html.twig" %}
+
+{% block title %}Article{% endblock %}
+
+{% block content %}
+    <a href="{{ path('homepage') }}">Home</a> -> <a href="{{ path('listWithAuthors') }}">list page</a>
+    <div class="col-md-8">
+        <h2>Article</h2>
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.content }}</p>
+            <p>publié le {{ article.date_publi }}</p>
+        <hr>
+        <h2>Auteur:
+            <a href="{{ path('author', {id:author.id}) }}">{{ author.username }}</a>
+        </h2>
     </div>
-</body>
-</html>
+{% endblock %}
