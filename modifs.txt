@@ -1,14 +1,9 @@
-installer twig avec composer: "twig/twig": "~2.0"
-enregistrer le service twig dans app.php
-supprimer view.php
-créer index.html.twig
-modifier app/routes.php
+créer class DAO
 
-rajouter twig-bridge ~3.3 et asset "symfony/asset": "~3.3" (symfony)
+articleDAO doit maintenant hériter de DAO
 
-rajouter dans app.php asset service provider
-$app->register(new Silex\Provider\AssetServiceProvider(), array(
-    'assets.version' => 'v1'
-));
+DAO doit implémenter la function buildObject permettant de créer 
+un objet hydraté à partir d'un tableau de données et d'un nom de classe
 
-passage de boostrap cdn vers fichier hébergé :utilisation de {{ asset() }}
+Rajouter une propriété tableName à DAO et les méthodes find($id), findAll, insert($data), update($data,$id) et delete($id) 
+communes à toutes les classes filles 
