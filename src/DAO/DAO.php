@@ -138,7 +138,7 @@ abstract class DAO
         // On vérifie que l'id soit bien numérique
         if(!empty($id) && is_numeric($id)){
             $delete = $this->getDb()->prepare('DELETE FROM '.$this->tableName.' WHERE id = :idASupprimer');
-            $delete->bindValue(':idASupprimer', $id, PDO::PARAM_INT);
+            $delete->bindValue(':idASupprimer', $id, \PDO::PARAM_INT);
 
             if($delete->execute()){
                 return true;
@@ -227,8 +227,24 @@ abstract class DAO
      * @param int $id L'identifiant de la ligne à mettre à jour
      * @return true si ok, false sinon
      */
-    public function update($data, $id) // Create
-    {
+    public function update($data, $id = 0) // Update
+    {   
+        if(is_object($data)){
+            //on va transformer l'objet en tableau php        
+            $dataArray = [];
+
+            $methods = get_class_methods($data);
+
+            foreach($methods as $method){
+                 if(preg_match('#^set#', $method) AND method_exists($data, str_replace('set', 'get', $method))){
+                        $getter = str_replace('set', 'get', $method);
+                        $dataArray[strtolower(str_replace('set', '', $method))] = $data->$getter();
+                }
+            }
+
+            $data = $dataArray;
+
+        }
         if(is_array($data)){ // Permet de déterminer que $data est bien un tableau
             $colNames = array_keys($data); // Permet de stocker sous forme de tableau les clés de $data
             $colNamesString = implode(', ', $colNames); // Permet de transformer le tableau $colNames en chaine de caractères. Chaque entrée sera séparée par une virgule
@@ -251,8 +267,6 @@ abstract class DAO
             foreach($data as $key => $value){ // Permet d'associer les marqueurs SQL (:firstname par exemple) à leurs valeurs
                 $update->bindValue(':'.$key, strip_tags($value));
             }
-            // Rempli le marqueur :id en lui donnant pour valeur le paramètre de la fonction/méthode
-            $update->bindValue(':id', $id, PDO::PARAM_INT);
 
             if($update->execute()){  // On exécute la requete
                 return true;

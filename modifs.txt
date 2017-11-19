@@ -1,38 +1,15 @@
-mise en place des roles
-ROLE_USER
-ROLE_ADMIN
+rajout de la route admin_article_edit
 
-rajout dans la bdd de admin => '@dm1n'
-'admin', '$2y$13$A8MQM2ZNOi99EW.ML7srhOJsCaybSbexAj/0yXrJs4gQ/2BqMMW2K', 'EDDsl&fBCJB|a5XUtAlnQN8', 'ROLE_ADMIN'
+création de l'action dans le controlleur
+création de la vue
 
-modif de la config sécurité dans app.php
-$app->register(new Silex\Provider\SecurityServiceProvider(), array(
-    'security.firewalls' => array(
-        // ...
-    ),
-    'security.role_hierarchy' => array(
-        'ROLE_ADMIN' => array('ROLE_USER'),
-    ),
-    'security.access_rules' => array(
-        array('^/admin', 'ROLE_ADMIN'),
-    ),
-));
+Modif de DAO update (traitement avec object)
 
-rajout du lien vers l'admin si un admin s'est connecté dans layout.html.twig
-rajout des fichier js jquery, boostrap et css fontawesome
+rajout de la route admin_article_delete
+création de l'action dans le controlleur
 
-rajouter la route dans routes.php
-Ajout du fichier AdminController.php et de la methode indexAction associée à la page d'accueil de l'admin
+modif dans DAO delete  \PDO::PARAM_INT (le \ devant est nécessaire)
 
-ajout de "twig/extensions": "~1.4",
-    "symfony/validator": "~2.8|3.0.*" 
-
-enregistrer ces services dans app.php
-$app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
-    $twig->addExtension(new Twig_Extensions_Extension_Text());
-    return $twig;
-});
-$app->register(new Silex\Provider\ValidatorServiceProvider());
-
-créer la vue de la page d'accueil de l'admin : admin.html.twig
-
+rajoute de la route admin_article_add
+création de l'action dans le controlleur
+on reprend la même vue que pour la modif

@@ -25,7 +25,7 @@
 }
 </style>
 <div class="tab-content">
-    <div class="tab-pane fade in active adminTable" id="articles">
+    <div class="tab-pane fade in active adminTable show" id="articles">
         {% if articles %}
         <div class="table-responsive">
             <table class="table table-hover table-condensed">
@@ -41,7 +41,7 @@
                     <td><a class="articleTitle" href="{{ path('article', { 'id': article.id }) }}">{{ article.title }}</a></td>
                     <td>{{ article.content | truncate(60) }}</td>
                     <td>
-                        <a href="{#{{ path('admin_article_edit', { 'id': article.id }) }}#}" class="btn btn-info btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('admin_article_edit', { 'id': article.id }) }}" class="btn btn-info btn-xs" title="Edit"><i class="fa fa-pencil"></i></a>
                         <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#articleDialog{{ article.id }}"><i class="fa fa-trash"></i>
                         </button>
                         <div class="modal fade" id="articleDialog{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <a href="{#{{ path('admin_article_delete', { 'id': article.id }) }}#}" class="btn btn-danger">Confirm</a>
+                                        <a href="{{ path('admin_article_delete', { 'id': article.id }) }}" class="btn btn-danger">Confirm</a>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -69,7 +69,7 @@
         {% else %}
         <div class="alert alert-warning">No articles found.</div>
         {% endif %}
-        <a href="{#{{ path('admin_article_add') }}#}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add article</button></a>
+        <a href="{{ path('admin_article_add') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add article</button></a>
     </div>
     <div class="tab-pane fade adminTable" id="users">
         <!-- TODO Insérer ici le code de gestion des utilisateurs -->
