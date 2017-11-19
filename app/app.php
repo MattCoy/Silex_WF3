@@ -44,6 +44,10 @@ $app->register(new Provider\WebProfilerServiceProvider(), array(
 
 $app->register(new Sorien\Provider\DoctrineProfilerServiceProvider());
 
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\LocaleServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+
 // Register services.
 $app['dao.user'] = function ($app) {
     return new WF3\DAO\UserDAO($app['db'], 'users', 'WF3\Domain\User');

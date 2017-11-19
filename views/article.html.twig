@@ -3,12 +3,12 @@
 {% block title %}Article{% endblock %}
 
 {% block content %}
-    <a href="{{ path('homepage') }}">Home</a> -> <a href="{{ path('listWithAuthors') }}">list page</a>
-    <div class="col-md-8">
+       <a href="{{ path('homepage') }}">Home</a> -> <a href="{{ path('listWithAuthors') }}">list page</a>
+       <div class="col-md-8">
         <h2>Article</h2>
         <h3>{{ article.title }}</h3>
         <p>{{ article.content }}</p>
-            <p>publié le {{ article.date_publi }}</p>
+        <p>publié le {{ article.date_publi }}</p>
         <hr>
         <h2>Auteur:
             <a href="{{ path('author', {id:author.id}) }}">{{ author.username }}</a>

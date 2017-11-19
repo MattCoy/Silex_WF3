@@ -182,6 +182,41 @@ abstract class DAO
                 return true;
             }
         }
+        elseif(is_object($data)){ // Permet de déterminer que $data est bien un objet
+            $sql = 'INSERT INTO ' . $this->tableName . ' (';
+            $methods = get_class_methods($data);
+            foreach($methods as $method){
+                 if(preg_match('#^set#', $method) AND strtolower(str_replace('set', '', $method)) != 'id' AND method_exists($data, str_replace('set', 'get', $method))){
+                        $sql .= strtolower(str_replace('set', '', $method)) . ', ';
+                }
+            }
+            $sql = substr($sql, 0, -2); // Permet de retirer le dernier espace et la dernière virgule (supprime les deux derniers caractères)
+            $sql .= ') VALUES ('; // Rajoute une parenthèse 
+            //on recommence pour intégrer les données dans la requête sql
+            $methods = get_class_methods($data);
+            foreach($methods as $method){
+                if(preg_match('#^set#', $method) AND strtolower(str_replace('set', '', $method)) != 'id' AND method_exists($data, str_replace('set', 'get', $method))){
+                    $sql .= ':'. strtolower(str_replace('set', '', $method)) . ', ';                    
+                }
+            }
+            $sql = substr($sql, 0, -2); // Permet de retirer le dernier espace et la dernière virgule (supprime les deux derniers caractères)
+            $sql .= ')'; // Rajoute la parenthèse finale
+
+            $insert = $this->getDb()->prepare($sql); // On prépare la requete SQL
+            
+            $methods = get_class_methods($data);
+            foreach($methods as $method){ // Permet d'associer les marqueurs SQL (:firstname par exemple) à leurs valeurs
+                if(preg_match('#^set#', $method) AND strtolower(str_replace('set', '', $method)) != 'id' AND method_exists($data, str_replace('set', 'get', $method))){
+                    $getter = str_replace('set', 'get', $method);
+                    $insert->bindValue(':'. strtolower(str_replace('set', '', $method)) , strip_tags($data->$getter()));
+                }
+            }
+        
+            if($insert->execute()){  // On exécute la requete
+                return true;
+            }
+           
+        }
         
         return false;
     }

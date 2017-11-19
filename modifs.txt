@@ -1,1 +1,18 @@
-créer un fichier views/layout.html.php
+installer le composant form:
+"symfony/form": "~3.3",
+"symfony/translation": "~2.8|3.0.*",
+"symfony/config": "~2.8|3.0.*"
+
+conflit avec symfony/security-bundle
+passer "symfony/security-bundle": "~3.3" en "symfony/security-bundle": "~3.2"
+
+créer src/Form/Type/ArticleType.php
+
+enregistrer les services dans app
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\LocaleServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+
+rajouter le formulaire dans la vue de la fiche auteur et le controlleur associé
+
+modif de DAO -> insert avec un objet

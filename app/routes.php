@@ -8,7 +8,7 @@ $app->get('/', 'WF3\Controller\HomeController::homePageAction')->bind('homepage'
 $app->get('/list', 'WF3\Controller\HomeController::listAction')->bind('listWithAuthors');
 
 //author details page
-$app->get('/author/{id}', 'WF3\Controller\HomeController::authorAction')->bind('author');
+$app->match('/author/{id}', 'WF3\Controller\HomeController::authorAction')->bind('author');
 
 //article details page
 $app->get('/article/{id}', 'WF3\Controller\HomeController::articleAction')->bind('article');

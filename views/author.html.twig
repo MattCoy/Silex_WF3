@@ -21,4 +21,35 @@
         </article>
         {% endfor %}
     </div>
+    <div class="col-md-4">
+        {% if articleForm %}
+            {{ form_start(articleForm) }}
+                <div class="form-group">
+                    {{ form_errors(articleForm.title) }}
+                    {{ form_widget(articleForm.title, { 'attr':  {
+                        'class': 'form-control',
+                        'placeholder': 'Enter your title'
+                    }}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_errors(articleForm.content) }}
+                    {{ form_widget(articleForm.content, { 'attr':  {
+                        'rows': '4',
+                        'class': 'form-control',
+                        'placeholder': 'Enter your content'
+                    }}) }}
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Publish comment" />
+                </div>
+            {{ form_end(articleForm) }}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <a href="{{ path('login') }} ">Log in</a> to add comments.
+        {% endif %}
+    </div>
 {% endblock %}
