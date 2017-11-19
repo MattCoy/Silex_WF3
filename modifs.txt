@@ -1,18 +1,38 @@
-installer le composant form:
-"symfony/form": "~3.3",
-"symfony/translation": "~2.8|3.0.*",
-"symfony/config": "~2.8|3.0.*"
+mise en place des roles
+ROLE_USER
+ROLE_ADMIN
 
-conflit avec symfony/security-bundle
-passer "symfony/security-bundle": "~3.3" en "symfony/security-bundle": "~3.2"
+rajout dans la bdd de admin => '@dm1n'
+'admin', '$2y$13$A8MQM2ZNOi99EW.ML7srhOJsCaybSbexAj/0yXrJs4gQ/2BqMMW2K', 'EDDsl&fBCJB|a5XUtAlnQN8', 'ROLE_ADMIN'
 
-créer src/Form/Type/ArticleType.php
+modif de la config sécurité dans app.php
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        // ...
+    ),
+    'security.role_hierarchy' => array(
+        'ROLE_ADMIN' => array('ROLE_USER'),
+    ),
+    'security.access_rules' => array(
+        array('^/admin', 'ROLE_ADMIN'),
+    ),
+));
 
-enregistrer les services dans app
-$app->register(new Silex\Provider\FormServiceProvider());
-$app->register(new Silex\Provider\LocaleServiceProvider());
-$app->register(new Silex\Provider\TranslationServiceProvider());
+rajout du lien vers l'admin si un admin s'est connecté dans layout.html.twig
+rajout des fichier js jquery, boostrap et css fontawesome
 
-rajouter le formulaire dans la vue de la fiche auteur et le controlleur associé
+rajouter la route dans routes.php
+Ajout du fichier AdminController.php et de la methode indexAction associée à la page d'accueil de l'admin
 
-modif de DAO -> insert avec un objet
+ajout de "twig/extensions": "~1.4",
+    "symfony/validator": "~2.8|3.0.*" 
+
+enregistrer ces services dans app.php
+$app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
+    $twig->addExtension(new Twig_Extensions_Extension_Text());
+    return $twig;
+});
+$app->register(new Silex\Provider\ValidatorServiceProvider());
+
+créer la vue de la page d'accueil de l'admin : admin.html.twig
+

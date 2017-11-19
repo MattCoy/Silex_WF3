@@ -15,3 +15,6 @@ $app->get('/article/{id}', 'WF3\Controller\HomeController::articleAction')->bind
 
 //login page
 $app->get('/login', 'WF3\Controller\HomeController::loginAction')->bind('login');
+
+//admin homepage
+$app->get('/admin', 'WF3\Controller\AdminController::indexAction')->bind('adminHome');
