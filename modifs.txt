@@ -1,9 +1,10 @@
-créer class DAO
+Ajouter classes Domain/User et DAO/UserDAO
 
-articleDAO doit maintenant hériter de DAO
+Créer une page qui va lister tout les articles(titre, auteur, date de publication)
 
-DAO doit implémenter la function buildObject permettant de créer 
-un objet hydraté à partir d'un tableau de données et d'un nom de classe
+Le nom de l'auteur doit être cliquable et renvoyé sur une page de présentation de l'auteur : 
+nom, email, tél et liste des articles qu'il a écrit
 
-Rajouter une propriété tableName à DAO et les méthodes find($id), findAll, insert($data), update($data,$id) et delete($id) 
-communes à toutes les classes filles 
+->injection de dépendance $app['dao.user'] dans $app['dao.article']
+
+Le titre de l'article doit être cliquable et renvoyer sur la page détail de l'article avec le contenu et toujours l'auteur

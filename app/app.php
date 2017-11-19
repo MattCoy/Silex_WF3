@@ -17,11 +17,13 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
 ));
 
 // Register services.
-$app['dao.article'] = function ($app) {
-    return new WF3\DAO\ArticleDAO($app['db'], 'articles', 'WF3\Domain\Article');
-};
-
-// Register services.
 $app['dao.user'] = function ($app) {
     return new WF3\DAO\UserDAO($app['db'], 'users', 'WF3\Domain\User');
 };
+
+$app['dao.article'] = function ($app) {
+    $articleDAO =  new WF3\DAO\ArticleDAO($app['db'], 'articles', 'WF3\Domain\Article');
+    $articleDAO->setUserDAO($app['dao.user']);
+    return $articleDAO;
+};
+
