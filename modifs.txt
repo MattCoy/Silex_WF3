@@ -1,0 +1,5 @@
+créer un fichier routes.php dans /app
+placer model dans /src
+placer views.php dans /views
+placer index.php dans /web et l'éditer
+créer .htaccess dans /web
