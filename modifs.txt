@@ -1,17 +1,14 @@
-créer Domain/Article.php
-créer DAO/ArticleDAO.php
-installer dbal avec composer 
-{
-    "require": {
-        "silex/silex": "~2.0",
-        "doctrine/dbal": "~2.5"
-    },
-    "autoload": {
-        "psr-4": {"MicroCMS\\": "src"}
-    }
-}
+installer twig avec composer: "twig/twig": "~2.0"
+enregistrer le service twig dans app.php
+supprimer view.php
+créer index.html.twig
+modifier app/routes.php
 
-créer app/app.php
-créer app/config/prod.php et app/config/dev.php
+rajouter twig-bridge ~3.3 et asset "symfony/asset": "~3.3" (symfony)
 
-modification de routes.php, view.php et index.php
+rajouter dans app.php asset service provider
+$app->register(new Silex\Provider\AssetServiceProvider(), array(
+    'assets.version' => 'v1'
+));
+
+passage de boostrap cdn vers fichier hébergé :utilisation de {{ asset() }}
