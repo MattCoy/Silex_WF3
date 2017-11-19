@@ -2,6 +2,7 @@
 namespace WF3\Controller;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController {
 	/**
@@ -57,6 +58,19 @@ class HomeController {
 	    return $app['twig']->render('article.html.twig', array(
 	                                                    'article' => $article,
 	                                                    'author' => $author
+	    ));
+	}
+
+	/**
+     * login page controller.
+     *
+     * @param Application $app Silex application
+     * @param $request Symfony\Component\HttpFoundation\Request
+     */
+	public function loginAction(Application $app, Request $request){
+	    return $app['twig']->render('login.html.twig', array(
+	        'error'         => $app['security.last_error']($request),
+	        'last_username' => $app['session']->get('_security.last_username'),
 	    ));
 	}
 }

@@ -1,4 +1,10 @@
-installer l'outil symfony webprofiler : silex/web-profiler:^2.0
-rajouter Sorein/silex-dbal-profiler : sorien/silex-dbal-profiler "~2.0"
+rajouter champs password, salt et role à la table users, renommer name en username (modifs à faire dans les vues)
 
-créer src/Controller et HomeController.php
+installer "symfony/security": "~3.0" et symfony/security-bundle 3.3 (pour le webprofiler)
+
+rajouter méthodes interface dans Domain\User et DAO\UserDAO
+
+rajouter logout dans config app.php 'logout' => array('logout_path' => '/logout', 'invalidate_session' => true)
+
+ajouter une bouton logout dans les vues si on est connecté ou login si on ne l'est pas 
+path('logout') est générée automatiquement à partir du chemin logout_path où les / sont remplacés par des _ (sauf le premier)

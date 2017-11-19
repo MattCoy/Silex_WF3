@@ -12,3 +12,6 @@ $app->get('/author/{id}', 'WF3\Controller\HomeController::authorAction')->bind('
 
 //article details page
 $app->get('/article/{id}', 'WF3\Controller\HomeController::articleAction')->bind('article');
+
+//login page
+$app->get('/login', 'WF3\Controller\HomeController::loginAction')->bind('login');
