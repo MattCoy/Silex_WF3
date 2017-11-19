@@ -27,3 +27,15 @@ $app->get('/admin/delete_article/{id}', 'WF3\Controller\AdminController::deleteA
 
 //admin article add page
 $app->match('/admin/add_article', 'WF3\Controller\AdminController::addArticleAction')->bind('admin_article_add');
+
+//admin user edit page
+$app->match('/admin/edit_user/{id}', 'WF3\Controller\AdminController::editUserAction')->bind('admin_user_edit');
+
+//admin user delete page
+$app->get('/admin/delete_user/{id}', 'WF3\Controller\AdminController::deleteUserAction')->bind('admin_user_delete');
+
+//admin user add page
+$app->match('/admin/add_user', 'WF3\Controller\AdminController::addUserAction')->bind('admin_user_add');
+
+//sign in page
+$app->match('/sign_in', 'WF3\Controller\HomeController::signInAction')->bind('signin');

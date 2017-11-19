@@ -227,9 +227,8 @@ abstract class DAO
      * @param int $id L'identifiant de la ligne à mettre à jour
      * @return true si ok, false sinon
      */
-    public function update($data, $id = 0) // Update
-    {   
-        if(is_object($data)){
+    public function update($data, $id = 0) // Create
+    {   if(is_object($data)){
             //on va transformer l'objet en tableau php        
             $dataArray = [];
 

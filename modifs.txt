@@ -1,15 +1,20 @@
-rajout de la route admin_article_edit
+création du formulaire d'ajout d'utilisateurs UserType.php
+création de la vue associée : user_form.html.twig
+modif de admin.html.twig pour rajouter la liste des utilisateurs et les boutons d'action
 
-création de l'action dans le controlleur
-création de la vue
+rajouter les routes admin_user_edit, admin_user_delete et admin_user_add
 
-Modif de DAO update (traitement avec object)
+Créer les méthodes correspondantes editUserAction, deleteUserAction et addUserAction dans AdminController 
 
-rajout de la route admin_article_delete
-création de l'action dans le controlleur
+!! si on modifie un user qui n'avait pas de salt, le salt n'existe toujours pas : 
+il faut créer l'utilisateur afin de générer le salt
 
-modif dans DAO delete  \PDO::PARAM_INT (le \ devant est nécessaire)
+Rajouter un lien sign in sur index pour que les utilisateurs puissent s'inscrire
+Créer la route correspondante, ainsi que le contrôleur
+Créer un userRegisterType qui hérite de UserType en enlevant role
+Créer une vue pour ce nouveau formulaire
 
-rajoute de la route admin_article_add
-création de l'action dans le controlleur
-on reprend la même vue que pour la modif
+Rajouter le code dans le contrôleur pour logger automatiquement l'utilisateur qui vient de s'inscrire
+
+A FAIRE: rajouter les champs email et phone dans le form UserType
+Controler lors de l'inscription que l'email et le pseudo ne sont pas dféjà dans la base

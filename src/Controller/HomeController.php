@@ -5,6 +5,9 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use WF3\Domain\Article;
 use WF3\Form\Type\ArticleType;
+use WF3\Domain\User;
+use WF3\Form\Type\UserRegisterType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class HomeController {
 	/**
@@ -92,5 +95,54 @@ class HomeController {
 	        'error'         => $app['security.last_error']($request),
 	        'last_username' => $app['session']->get('_security.last_username'),
 	    ));
+	}
+
+	/**
+     * User sign in controller.
+     *
+     * @param Application $app Silex application
+     * @param Request $request the http request
+     */
+	public function signInAction(Application $app, Request $request){	
+	    $user = new User();
+	    $userForm = $app['form.factory']->create(UserRegisterType::class, $user);
+	    $userForm->handleRequest($request);
+	    if ($userForm->isSubmitted() && $userForm->isValid()) {
+	    	// generate a random salt value
+	        $salt = substr(md5(time()), 0, 23);
+	        $user->setSalt($salt);
+	        //get plain password 
+	        $plainPassword = $user->getPassword();
+	        // find the default encoder
+	        $encoder = $app['security.encoder.bcrypt'];
+	        // compute the encoded password
+	        $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+	        $user->setPassword($password);
+	        //new users role is ROLE_USER by default
+	        $user->setRole('ROLE_USER');
+	        $app['dao.user']->insert($user);
+
+	        //this code automatically login new user 
+	        $token = new UsernamePasswordToken(
+                $user, 
+                $user->getPassword(), 
+                'main',                 //key of the firewall you are trying to authenticate 
+                array('ROLE_USER')
+            );
+            $app['security.token_storage']->setToken($token);
+
+            // _security_main is, again, the key of the firewall
+            $app['session']->set('_security_main', serialize($token));
+            $app['session']->save(); // this will be done automatically but it does not hurt to do it explicitly
+	        
+	        
+	        $app['session']->getFlashBag()->add('success', 'Hello ' .  $user->getUsername());
+	        // Redirect to admin home page
+	    	return $app->redirect($app['url_generator']->generate('homepage'));
+	    }
+	    return $app['twig']->render('user_register.html.twig', array(
+        		'title' => 'Sign in',
+       			'userForm' => $userForm->createView()
+       	));
 	}
 }
